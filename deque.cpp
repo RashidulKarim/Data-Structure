@@ -3,22 +3,21 @@
 using namespace std;
 
 template<class T>
-class Node
-{
-public:
-    T data;
-    Node<T>* next;
-    Node<T>* prev;
-};
-
-template<class T>
 class Deque
 {
-public:
-    Node<T>* head;
-    Node<T>* tail;
+private:
+    class Node
+    {
+    public:
+        T data;
+        Node* next;
+        Node* prev;
+    };
+    Node* head;
+    Node* tail;
     int sz, isReverse;
 
+    public:
     Deque()
     {
         head = NULL;
@@ -35,9 +34,9 @@ public:
             isReverse = 1;
     }
 
-    Node<T>* createNode(T data)
+    Node* createNode(T data)
     {
-        Node<T>* newNode = new Node<T>;
+        Node* newNode = new Node;
         newNode->data = data;
         newNode->next = NULL;
         newNode->prev = NULL;
@@ -46,7 +45,7 @@ public:
 
     void pushAtHead(T data)
     {
-        Node<T>* newNode = createNode(data);
+        Node* newNode = createNode(data);
         if(sz == 0)
         {
             head = newNode;
@@ -63,7 +62,7 @@ public:
 
     void pushAtBack(T data)
     {
-        Node<T> * newNode = createNode(data);
+        Node * newNode = createNode(data);
         if(sz == 0)
         {
             head = newNode;
@@ -111,7 +110,7 @@ public:
             return;
         }
 
-        Node<T>* lastNode = tail;
+        Node* lastNode = tail;
         tail = tail->prev;
         tail->next = NULL;
         delete lastNode;
@@ -134,7 +133,7 @@ public:
             sz--;
             return;
         }
-        Node<T>* firstNode = head;
+        Node* firstNode = head;
         head = head->next;
         head->prev = NULL;
         sz--;
@@ -190,7 +189,7 @@ public:
 
     T max()
     {
-        Node<T>* temp = head->next;
+        Node* temp = head->next;
         if(sz == 0)
             return -1;
         T maxx = head->data;
@@ -206,7 +205,7 @@ public:
 
     T min()
     {
-        Node<T>* temp = head->next;
+        Node* temp = head->next;
         if(sz == 0)
             return -1;
         T min = head->data;
