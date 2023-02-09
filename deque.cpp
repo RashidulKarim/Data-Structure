@@ -17,23 +17,6 @@ private:
     Node* tail;
     int sz, isReverse;
 
-    public:
-    Deque()
-    {
-        head = NULL;
-        tail = NULL;
-        sz = 0;
-        isReverse = 0;
-    }
-
-    void reverse()
-    {
-        if(isReverse)
-            isReverse = 0;
-        else
-            isReverse = 1;
-    }
-
     Node* createNode(T data)
     {
         Node* newNode = new Node;
@@ -75,22 +58,6 @@ private:
         tail = newNode;
         sz++;
         return;
-    }
-
-    void push_front(T data)
-    {
-        if(isReverse)
-            pushAtBack(data);
-        else
-            pushAtHead(data);
-    }
-
-    void push_back(T data)
-    {
-        if(isReverse)
-            pushAtHead(data);
-        else
-            pushAtBack(data);
     }
 
     void removeFromBack()
@@ -138,6 +105,39 @@ private:
         head->prev = NULL;
         sz--;
         delete firstNode;
+    }
+
+    public:
+    Deque()
+    {
+        head = NULL;
+        tail = NULL;
+        sz = 0;
+        isReverse = 0;
+    }
+
+    void reverse()
+    {
+        if(isReverse)
+            isReverse = 0;
+        else
+            isReverse = 1;
+    }
+
+    void push_front(T data)
+    {
+        if(isReverse)
+            pushAtBack(data);
+        else
+            pushAtHead(data);
+    }
+
+    void push_back(T data)
+    {
+        if(isReverse)
+            pushAtHead(data);
+        else
+            pushAtBack(data);
     }
 
     void pop_back()
@@ -228,6 +228,7 @@ int main()
     dq.push_front(5);
     dq.push_back(20);
     dq.push_back(30);
+    dq.push_back(100);
     dq.push_back(40);
     dq.pop_back();
     dq.pop_front();
