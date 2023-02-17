@@ -115,17 +115,81 @@ public:
         }
         return false;
     }
+
+    void Delete(T value)
+    {
+        Node * cur = root;
+        Node * prev = NULL;
+
+        while(cur != NULL)
+        {
+            if(value > cur->value)
+            {
+                prev = cur;
+                cur = cur->right;
+            }
+            else if(value < cur->value)
+            {
+                prev = cur;
+                cur = cur->left;
+            }
+            else
+                break;
+        }
+
+        if(cur == NULL)
+        {
+            cout<<"Value is not present BST\n";
+            return;
+        }
+
+        //case 1: both child is null
+        if(cur->left == NULL && cur->right == NULL)
+        {
+            if(prev->left && prev->left->value == cur->value)
+            {
+                prev->left = NULL;
+            } else {
+                prev->right = NULL;
+            }
+            delete cur;
+            return;
+        }
+
+        //case 2: one child is null
+        if(cur->left != NULL && cur->right == NULL)
+        {
+            if(prev->left && prev->left->value == cur->value)
+                prev->left = cur->left;
+            else
+                prev->right = cur->left;
+            delete cur;
+            return;
+        }
+
+        if(cur->left == NULL && cur->right != NULL)
+        {
+            if(prev->left && prev->left->value == cur->value)
+                prev->left = cur->right;
+            else
+                prev->right = cur->right;
+            delete cur;
+            return;
+        }
+    }
 };
 
 int main()
 {
     BST<int> bst;
-    bst.insertion(5);
+    bst.insertion(6);
     bst.insertion(4);
     bst.insertion(3);
-    bst.insertion(9);
+    bst.insertion(5);
+    bst.insertion(7);
     bst.insertion(8);
+    bst.Delete(7);
     bst.BFS();
-    cout<<bst.search(2);
+    //cout<<bst.search(2);
     return 0;
 }
