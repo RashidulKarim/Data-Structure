@@ -13,9 +13,10 @@ class BST
         Node * right;
     };
 
-    Node * root;
     int counter;
 public:
+    Node * root;
+
     BST()
     {
         root = NULL;
@@ -149,7 +150,9 @@ public:
             if(prev->left && prev->left->value == cur->value)
             {
                 prev->left = NULL;
-            } else {
+            }
+            else
+            {
                 prev->right = NULL;
             }
             delete cur;
@@ -176,6 +179,69 @@ public:
             delete cur;
             return;
         }
+
+        //case 3: have 2 child
+
+        if(cur->left != NULL & cur->right != NULL)
+        {
+            Node* temp = cur->right;
+            while(temp->left != NULL)
+            {
+                temp = temp->left;
+            }
+            T saved = temp->value;
+            Delete(saved);
+            cur->value = saved;
+            return;
+        }
+    }
+
+    T findMininumValue(Node * root)
+    {
+        if(root == NULL)
+        {
+            cout<<"BST is empty\n";
+            return -1;
+        }
+        Node* curr = root;
+        while(curr->left != NULL)
+        {
+            curr = curr->left;
+        }
+        return curr->value;
+    }
+
+    T findMaximumValue(Node * root)
+    {
+        if(root == NULL)
+        {
+            cout<<"BST is empty\n";
+            return -1;
+        }
+        Node* curr = root;
+        while(curr->right != NULL)
+        {
+            curr = curr->right;
+        }
+        return curr->value;
+    }
+
+    bool isValid(Node* root)
+    {
+        if(root == NULL)
+            return true;
+
+        if(root->left != NULL && findMaximumValue(root->left) > root->value)
+            return false;
+
+        if(root->right != NULL && findMininumValue(root->right) < root->value)
+            return false;
+
+        if(!isValid(root->left) || !isValid(root->right))
+            return false;
+
+        return true;
+
     }
 };
 
@@ -188,8 +254,10 @@ int main()
     bst.insertion(5);
     bst.insertion(7);
     bst.insertion(8);
-    bst.Delete(7);
+    //bst.Delete(6);
     bst.BFS();
+    cout<<bst.findMininumValue(bst.root)<<" "<<bst.findMaximumValue(bst.root);
     //cout<<bst.search(2);
+    cout<<"\n"<<bst.isValid(bst.root);
     return 0;
 }
